@@ -4,7 +4,31 @@ This is a [multi-party computation](https://en.wikipedia.org/wiki/Secure_multi-p
 
 This protocol is described in a [forthcoming paper](https://eprint.iacr.org/2017/1050). It produces parameters for an adaptation of [Jens Groth's 2016 pairing-based proving system](https://eprint.iacr.org/2016/260) using the [BLS12-381](https://github.com/ebfull/pairing/tree/master/src/bls12_381) elliptic curve construction. The security proof relies on a randomness beacon being applied at the end of the ceremony.
 
-**This is a work in progress.**
+## Instructions
+
+If you've been asked to participate, you were sent a `challenge` file. Put that in the current directory and use your Rust toolchain execute the computation:
+
+```
+cargo run --release --bin compute
+```
+
+The process could take an hour or so. When it's finished, it will place a `response` file in the current directory. That's what you send back. It will also print a hash of the `response` file it produced. You need to write this hash down (or post it publicly) so that you and others can confirm that your contribution exists in the final transcript of the ceremony.
+
+## Recommendations
+
+Participants of the ceremony sample some randomness, perform a computation, and then destroy the randomness. **Only one participant needs to do this successfully to ensure the final parameters are secure.** In order to see that this randomness is truly destroyed, participants may take various kinds of precautions:
+
+* putting the machine in a Faraday cage
+* destroying the machine afterwards
+* running the software on secure hardware
+* not connecting the hardware to any networks
+* using multiple machines and randomly picking the result of one of them to use
+* using different code than what we have provided
+* using a secure operating system
+* using an operating system that nobody would expect you to use (Rust can compile to Mac OS X and Windows)
+* lots of other ideas we can't think of
+
+It is totally up to the participants. In general, participations should beware of side-channel attacks and assume that remnants of the randomness will be in RAM after the computation has finished.
 
 ## License
 
