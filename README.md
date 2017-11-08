@@ -6,7 +6,7 @@ This protocol is described in a [forthcoming paper](https://eprint.iacr.org/2017
 
 ## Instructions
 
-If you've been asked to participate, you were sent a `challenge` file. Put that in the current directory and use your Rust toolchain execute the computation:
+If you've been asked to participate, you were sent a `challenge` file. Put that in the current directory and use your [Rust toolchain](https://www.rust-lang.org/en-US/) execute the computation:
 
 ```
 cargo run --release --bin compute
