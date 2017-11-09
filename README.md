@@ -26,6 +26,7 @@ Participants of the ceremony sample some randomness, perform a computation, and 
 * using different code than what we have provided
 * using a secure operating system
 * using an operating system that nobody would expect you to use (Rust can compile to Mac OS X and Windows)
+* using an unusual Rust toolchain or [alternate rust compiler](https://github.com/thepowersgang/mrustc)
 * lots of other ideas we can't think of
 
 It is totally up to the participants. In general, participations should beware of side-channel attacks and assume that remnants of the randomness will be in RAM after the computation has finished.
