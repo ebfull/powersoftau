@@ -29,7 +29,7 @@ Participants of the ceremony sample some randomness, perform a computation, and 
 * using an unusual Rust toolchain or [alternate rust compiler](https://github.com/thepowersgang/mrustc)
 * lots of other ideas we can't think of
 
-It is totally up to the participants. In general, participations should beware of side-channel attacks and assume that remnants of the randomness will be in RAM after the computation has finished.
+It is totally up to the participants. In general, participants should beware of side-channel attacks and assume that remnants of the randomness will be in RAM after the computation has finished.
 
 ## License
 
