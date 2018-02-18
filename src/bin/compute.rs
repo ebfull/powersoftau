@@ -13,22 +13,14 @@ fn main() {
     let mut rng = {
         use byteorder::{ReadBytesExt, BigEndian};
         use blake2::{Blake2b, Digest};
-        use rand::{SeedableRng, Rng, OsRng};
+        use rand::{SeedableRng};
         use rand::chacha::ChaChaRng;
 
         let h = {
-            let mut system_rng = OsRng::new().unwrap();
             let mut h = Blake2b::default();
 
-            // Gather 1024 bytes of entropy from the system
-            for _ in 0..1024 {
-                let r: u8 = system_rng.gen();
-                h.input(&[r]);
-            }
-
-            // Ask the user to provide some information for additional entropy
             let mut user_input = String::new();
-            println!("Type some random text and press [ENTER] to provide additional entropy...");
+            println!("Type some random text and press [ENTER] to provide the entropy...");
             io::stdin().read_line(&mut user_input).expect("expected to read some random text from the user");
 
             // Hash it all up to make a seed
