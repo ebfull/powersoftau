@@ -18,6 +18,8 @@ generic-array = "0.8.3"
 typenum = "1.9.0"
 byteorder = "1.1.0"
 pairing = "0.13.0"
+hex-literal = "0.1"
+rust-crypto = "0.2"
 
 [features]
 u128-support = ["pairing/u128-support"]
