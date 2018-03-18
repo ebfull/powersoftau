@@ -26,7 +26,7 @@ fn main() {
         let mut cur_hash: [u8; 32] = hex!("000000000000000000357b7d5040ee362f037bdf873eb4cde615b2f368f2f2a6");
 
         // Performs 2^n hash iterations over it
-        const N: usize = 40;
+        const N: usize = 42;
 
         for i in 0..(1u64<<N) {
             // Print 1024 of the interstitial states
