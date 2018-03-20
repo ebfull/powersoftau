@@ -22,7 +22,7 @@ fn main() {
         use crypto::sha2::Sha256;
         use crypto::digest::Digest;
 
-        // Place block hash here (this will change)
+        // Place block hash here (block number #514200)
         let mut cur_hash: [u8; 32] = hex!("00000000000000000034b33e842ac1c50456abe5fa92b60f6b3dfc5d247f7b58");
 
         // Performs 2^n hash iterations over it
