@@ -23,7 +23,7 @@ fn main() {
         use crypto::digest::Digest;
 
         // Place block hash here (this will change)
-        let mut cur_hash: [u8; 32] = hex!("000000000000000000357b7d5040ee362f037bdf873eb4cde615b2f368f2f2a6");
+        let mut cur_hash: [u8; 32] = hex!("00000000000000000034b33e842ac1c50456abe5fa92b60f6b3dfc5d247f7b58");
 
         // Performs 2^n hash iterations over it
         const N: usize = 42;
