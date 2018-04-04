@@ -335,15 +335,15 @@ fn test_pubkey_serialization() {
 #[derive(PartialEq, Eq, Clone)]
 pub struct Accumulator {
     /// tau^0, tau^1, tau^2, ..., tau^{TAU_POWERS_G1_LENGTH - 1}
-    tau_powers_g1: Vec<G1Affine>,
+    pub tau_powers_g1: Vec<G1Affine>,
     /// tau^0, tau^1, tau^2, ..., tau^{TAU_POWERS_LENGTH - 1}
-    tau_powers_g2: Vec<G2Affine>,
+    pub tau_powers_g2: Vec<G2Affine>,
     /// alpha * tau^0, alpha * tau^1, alpha * tau^2, ..., alpha * tau^{TAU_POWERS_LENGTH - 1}
-    alpha_tau_powers_g1: Vec<G1Affine>,
+    pub alpha_tau_powers_g1: Vec<G1Affine>,
     /// beta * tau^0, beta * tau^1, beta * tau^2, ..., beta * tau^{TAU_POWERS_LENGTH - 1}
-    beta_tau_powers_g1: Vec<G1Affine>,
+    pub beta_tau_powers_g1: Vec<G1Affine>,
     /// beta
-    beta_g2: G2Affine
+    pub beta_g2: G2Affine
 }
 
 impl Accumulator {
