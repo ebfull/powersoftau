@@ -31,6 +31,24 @@ Participants of the ceremony sample some randomness, perform a computation, and 
 
 It is totally up to the participants. In general, participants should beware of side-channel attacks and assume that remnants of the randomness will be in RAM after the computation has finished.
 
+## Reproducible builds
+
+To build a reproducible binary, use this command (requires rust nightly):
+
+```sh
+RUSTFLAGS="-Zremap-path-prefix-from=$PWD -Zremap-path-prefix-to=/remap" \
+    rustup run nightly cargo build --release --verbose
+```
+
+You can verify the project is reproducible in a scriptable way with reprotest:
+
+```sh
+(. /etc/os-release;
+    reprotest -vv --host-distro="$ID" --vary=-time,-fileordering --source-pattern 'Cargo.* src/' \
+        'CARGO_HOME="$PWD/.cargo" RUSTUP_HOME='"$HOME/.rustup"' RUSTFLAGS="-Zremap-path-prefix-from=$PWD -Zremap-path-prefix-to=/remap" \
+        rustup run nightly cargo build --release --verbose' 'target/release/{compute,new,verify_transform}')
+```
+
 ## License
 
 Licensed under either of
