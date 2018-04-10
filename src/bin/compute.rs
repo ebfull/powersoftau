@@ -41,7 +41,7 @@ fn main() {
         // Interpret the first 32 bytes of the digest as 8 32-bit words
         let mut seed = [0u32; 8];
         for i in 0..8 {
-            seed[i] = digest.read_u32::<BigEndian>().expect("digest is large enough for this to work");
+            seed[i] = digest.read_u32::<BigEndian>().expect("digest is not large enough for this to work");
         }
 
         ChaChaRng::from_seed(&seed)

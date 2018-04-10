@@ -55,7 +55,7 @@ fn main() {
 
         let mut seed = [0u32; 8];
         for i in 0..8 {
-            seed[i] = digest.read_u32::<BigEndian>().expect("digest is large enough for this to work");
+            seed[i] = digest.read_u32::<BigEndian>().expect("digest is not large enough for this to work");
         }
 
         ChaChaRng::from_seed(&seed)
@@ -64,7 +64,7 @@ fn main() {
     // Try to load `./challenge` from disk.
     let reader = OpenOptions::new()
                             .read(true)
-                            .open("challenge").expect("unable open `./challenge` in this directory");
+                            .open("challenge").expect("unable to open `./challenge` in this directory");
 
     {
         let metadata = reader.metadata().expect("unable to get filesystem metadata for `./challenge`");
