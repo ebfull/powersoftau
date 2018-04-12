@@ -7,8 +7,17 @@ use powersoftau::*;
 
 use std::fs::OpenOptions;
 use std::io::{self, Read, BufReader, Write, BufWriter};
+use std::path::Path;
+use std::process;
 
 fn main() {
+
+    // Check that the user placed the challenge file into the local directory
+    if !Path::new("./challenge").exists() {
+        println!("Error: ./challenge file not found.");
+        process::exit(1);
+    }
+
     // Create an RNG based on a mixture of system randomness and user provided randomness
     let mut rng = {
         use byteorder::{ReadBytesExt, BigEndian};
