@@ -660,7 +660,6 @@ pub fn verify_transform(before: &Accumulator, after: &Accumulator, key: &PublicK
 /// ... with high probability.
 fn merge_pairs<G: CurveAffine>(v1: &[G], v2: &[G]) -> (G, G)
 {
-    use std::sync::{Arc, Mutex};
     use rand::{thread_rng};
 
     assert_eq!(v1.len(), v2.len());
