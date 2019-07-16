@@ -138,6 +138,23 @@ pub struct PrivateKey {
     beta: Fr
 }
 
+fn compute_g2_s(
+    g1_s: &G1Affine,
+    g1_s_x: &G1Affine,
+    personalization: u8,
+    transcript_digest: &[u8]) -> G2Affine
+{
+    // Compute BLAKE2b(personalization | transcript | g^s | g^{s*x})
+    let mut h = Blake2b::default();
+    h.input(&[personalization]);
+    h.input(transcript_digest);
+    h.input(g1_s.into_uncompressed().as_ref());
+    h.input(g1_s_x.into_uncompressed().as_ref());
+
+    // Hash into G2 as g^{s'}
+    hash_to_g2(&h.result()).into_affine()
+}
+
 /// Constructs a keypair given an RNG and a 64-byte transcript `digest`.
 pub fn keypair<R: Rng>(rng: &mut R, digest: &[u8]) -> (PublicKey, PrivateKey)
 {
@@ -152,17 +169,8 @@ pub fn keypair<R: Rng>(rng: &mut R, digest: &[u8]) -> (PublicKey, PrivateKey)
         let g1_s = G1::rand(rng).into_affine();
         // Compute g^{s*x}
         let g1_s_x = g1_s.mul(x).into_affine();
-        // Compute BLAKE2b(personalization | transcript | g^s | g^{s*x})
-        let h = {
-            let mut h = Blake2b::default();
-            h.input(&[personalization]);
-            h.input(digest);
-            h.input(g1_s.into_uncompressed().as_ref());
-            h.input(g1_s_x.into_uncompressed().as_ref());
-            h.result()
-        };
-        // Hash into G2 as g^{s'}
-        let g2_s = hash_to_g2(h.as_ref()).into_affine();
+        // Compute hash in G2
+        let g2_s = compute_g2_s(&g1_s, &g1_s_x, personalization, digest);
         // Compute g^{s'*x}
         let g2_s_x = g2_s.mul(x).into_affine();
 
@@ -579,18 +587,9 @@ pub fn verify_transform(before: &Accumulator, after: &Accumulator, key: &PublicK
 {
     assert_eq!(digest.len(), 64);
 
-    let compute_g2_s = |g1_s: G1Affine, g1_s_x: G1Affine, personalization: u8| {
-        let mut h = Blake2b::default();
-        h.input(&[personalization]);
-        h.input(digest);
-        h.input(g1_s.into_uncompressed().as_ref());
-        h.input(g1_s_x.into_uncompressed().as_ref());
-        hash_to_g2(h.result().as_ref()).into_affine()
-    };
-
-    let tau_g2_s = compute_g2_s(key.tau_g1.0, key.tau_g1.1, 0);
-    let alpha_g2_s = compute_g2_s(key.alpha_g1.0, key.alpha_g1.1, 1);
-    let beta_g2_s = compute_g2_s(key.beta_g1.0, key.beta_g1.1, 2);
+    let tau_g2_s = compute_g2_s(&key.tau_g1.0, &key.tau_g1.1, 0, digest);
+    let alpha_g2_s = compute_g2_s(&key.alpha_g1.0, &key.alpha_g1.1, 1, digest);
+    let beta_g2_s = compute_g2_s(&key.beta_g1.0, &key.beta_g1.1, 2, digest);
 
     // Check the proofs-of-knowledge for tau/alpha/beta
     if !same_ratio(key.tau_g1, (tau_g2_s, key.tau_g2)) {
