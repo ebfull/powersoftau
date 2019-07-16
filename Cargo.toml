@@ -17,10 +17,7 @@ blake2 = "0.6.1"
 generic-array = "0.8.3"
 typenum = "1.9.0"
 byteorder = "1.1.0"
-pairing = "0.14"
 hex-literal = "0.1"
 rust-crypto = "0.2"
-bellman = "0.1"
-
-[features]
-u128-support = ["pairing/u128-support"]
+bn = "0.4.3"
+bincode = "0.1"
